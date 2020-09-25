@@ -1,0 +1,6 @@
+*.class
+.vs
+Debug
+.vscode/
+obj/
+bin/
