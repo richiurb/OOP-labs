@@ -22,7 +22,7 @@ namespace lab2
 
         public string Address { get; }
 
-        public void AddStockItems(Item item, double quantity, decimal cost)
+        public void AddStockItems(Item item, int quantity, decimal cost)
         {
             if (_stock.ContainsKey(item.Id))
             {
@@ -35,6 +35,51 @@ namespace lab2
             }
         }
 
+        public bool TryRemoveStockItems(Dictionary<int, int> stockItems, out decimal totalCost)
+        {
+            totalCost = 0;
+
+            if (stockItems.Any(item => !ValidateItem(item.Key, item.Value)))
+            {
+                return false;
+            }
+
+            foreach (var item in stockItems)
+            {
+                var stockItem = _stock[item.Key];
+
+                totalCost += stockItem.Cost * item.Value;
+
+                if (item.Value == stockItem.Quantity)
+                {
+                    _stock.Remove(item.Key);
+                }
+                else
+                {
+                    stockItem.Quantity -= item.Value;
+                }
+            }
+
+            return true;
+        }
+
+        public bool TryEstimateStockItems(Dictionary<int, int> stockItems, out decimal totalCost)
+        {
+            totalCost = 0;
+
+            foreach (var item in stockItems)
+            {
+                if (!ValidateItem(item.Key, item.Value))
+                {
+                    return false;
+                }
+
+                totalCost += _stock[item.Key].Cost * item.Value;
+            }
+
+            return true;
+        }
+
         public StockItem GetStockItem(int itemId)
         {
             _stock.TryGetValue(itemId, out var item);
@@ -44,6 +89,11 @@ namespace lab2
         public StockItem[] GetAllStockItems()
         {
             return _stock.Values.ToArray();
+        }
+
+        private bool ValidateItem(int itemId, int quantity)
+        {
+            return _stock.TryGetValue(itemId, out var stockItem) && stockItem.Quantity >= quantity;
         }
     }
 }

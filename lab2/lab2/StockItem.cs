@@ -2,7 +2,7 @@
 {
     public class StockItem
     {
-        public StockItem(Item item, decimal cost, double quantity)
+        public StockItem(Item item, decimal cost, int quantity)
         {
             Item = item;
             Cost = cost;
@@ -13,6 +13,6 @@
 
         public decimal Cost { get; set; }
 
-        public double Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }
