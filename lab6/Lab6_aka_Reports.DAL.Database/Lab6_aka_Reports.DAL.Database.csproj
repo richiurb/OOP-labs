@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lab6_aka_Reports.DAL\Lab6_aka_Reports.DAL.csproj" />
+    <ProjectReference Include="..\Lab6_aka_Reports.Entities\Lab6_aka_Reports.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
